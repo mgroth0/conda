@@ -4,6 +4,7 @@ import matt.file.commons.REGISTERED_FOLDER
 import matt.file.commons.TEMP_DIR
 import matt.file.sh
 import matt.kjlib.shell.Shell
+import matt.model.code.version.PythonVersion
 
 private val MINICONDA_FOLDER = REGISTERED_FOLDER + "miniconda"
 private val MINICONDA_ENVS_FOLDER = MINICONDA_FOLDER + "envs"
@@ -21,11 +22,12 @@ fun Shell<*>.installMinicondaIfNeccessary() {
 }
 
 typealias CondaEnv = CondaEnvTyped<*>
+
 class CondaEnvTyped<R>(name: String, private val shell: Shell<R>) {
   private val folder = MINICONDA_ENVS_FOLDER + name
   private val binFolder = folder + "bin"
   val python = binFolder + "python"
-  fun createIfDoesNotExist(version: String) {
+  fun createIfDoesNotExist(version: PythonVersion) {
 	if (folder.doesNotExist) {
 	  shell.sendCommand(
 		MINICONDA_BIN_FOLDER["conda"],
